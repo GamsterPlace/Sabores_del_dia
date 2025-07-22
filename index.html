@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sabores del Día - Ordena en línea</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="assets/css/styles.css" />
+  <!-- Para iconos de carrito -->
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+  <!-- Encabezado -->
+  <header class="bg-yellow-600 text-white p-4 flex justify-between items-center shadow-lg">
+    <h1 class="text-2xl font-bold">Sabores del Día</h1>
+
+    <!-- Botón carrito que abre sidebar -->
+    <button onclick="abrirSidebar()" class="relative text-white focus:outline-none" aria-label="Abrir carrito">
+      <i class="fas fa-shopping-cart text-2xl"></i>
+      <span id="contadorSidebar" class="absolute -top-2 -right-2 bg-red-500 text-white text-xs px-1.5 py-0.5 rounded-full">0</span>
+    </button>
+  </header>
+
+  <!-- Menú -->
+  <main class="p-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+    <!-- Producto Personalizable: Hamburguesa -->
+    <div class="bg-white rounded-xl shadow-md overflow-hidden product-card">
+      <img src="assets/img/ .jpg" alt="Hamburguesa" class="w-full h-48 object-cover">
+      <div class="p-4">
+        <h2 class="text-xl font-semibold">Hamburguesa Clásica</h2>
+        <p class="text-gray-600">Con queso, lechuga y papas fritas.</p>
+        <p class="text-lg font-bold mt-2">Desde Q38.00</p>
+        <button onclick="abrirPersonalizacion('Hamburguesa Clásica', 38)" class="mt-3 bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded">
+          Personalizar
+        </button>
+      </div>
+    </div>
+
+    <!-- Producto Personalizable: Pizza Artesanal -->
+    <div class="bg-white rounded-xl shadow-md overflow-hidden product-card">
+      <img src="assets/img/pizza.jpg" alt="Pizza" class="w-full h-48 object-cover">
+      <div class="p-4">
+        <h2 class="text-xl font-semibold">Pizza Artesanal</h2>
+        <p class="text-gray-600">Preparada con masa fina, salsa especial y mozzarella.</p>
+        <p class="text-lg font-bold mt-2">Desde Q50.00</p>
+        <button onclick="abrirPersonalizacion('Pizza Artesanal', 50)" class="mt-3 bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded">
+          Personalizar
+        </button>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Modal de Personalización -->
+  <div id="modal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden z-50">
+    <div class="bg-white rounded-lg p-6 w-full max-w-md">
+      <h2 id="modalTitulo" class="text-2xl font-bold mb-4">Personalizar Producto</h2>
+      
+      <!-- Tamaño -->
+      <label class="block font-medium mb-1">Tamaño:</label>
+      <select id="tamano" class="w-full border rounded px-2 py-1 mb-4">
+        <option value="Pequeño">Pequeño (Q0)</option>
+        <option value="Mediano">Mediano (Q5)</option>
+        <option value="Grande">Grande (Q10)</option>
+      </select>
+
+      <!-- Extras -->
+      <label class="block font-medium mb-1">Extras:</label>
+      <div class="mb-4 space-y-2">
+        <label><input type="checkbox" class="extra" value="Queso Extra|3"> Queso Extra (Q3)</label><br/>
+        <label><input type="checkbox" class="extra" value="Papas Grandes|5"> Papas Grandes (Q5)</label><br/>
+        <label><input type="checkbox" class="extra" value="Bebida|6"> Bebida (Q6)</label>
+      </div>
+
+      <!-- Comentarios -->
+      <label class="block font-medium mb-1">Comentarios:</label>
+      <textarea id="comentario" class="w-full border rounded px-2 py-1 mb-4" placeholder="Ej. Sin cebolla"></textarea>
+
+      <div class="flex justify-end gap-2">
+        <button onclick="cerrarModal()" class="px-4 py-2 bg-gray-300 rounded">Cancelar</button>
+        <button onclick="agregarPersonalizado()" class="px-4 py-2 bg-green-600 text-white rounded">Agregar al carrito</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sidebar Carrito -->
+  <div id="sidebarCarrito" class="fixed top-0 right-0 h-full w-80 bg-white shadow-lg p-4 z-50 transform translate-x-full transition-transform duration-300">
+    <div class="flex justify-between items-center mb-4">
+      <h2 class="text-lg font-bold">Tu pedido</h2>
+      <button onclick="cerrarSidebar()" class="text-gray-600 hover:text-red-500 text-2xl font-bold">&times;</button>
+    </div>
+    <div id="sidebarContenido" class="space-y-2 overflow-y-auto h-[70%]"></div>
+    <div class="mt-4 border-t pt-4">
+      <p class="text-lg font-bold">Total: Q<span id="sidebarTotal">0.00</span></p>
+      <a href="carrito.html" class="mt-3 inline-block w-full text-center bg-green-500 text-white py-2 rounded hover:bg-green-600">Finalizar pedido</a>
+    </div>
+  </div>
+
+  <script src="assets/js/main.js"></script>
+</body>
+<footer class="bg-yellow-600 text-white py-6 mt-10">
+  <div class="max-w-4xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-4">
+    <div class="text-center md:text-left">
+      <h3 class="text-xl font-bold mb-2">Restaurante Sabores del Día</h3>
+      <p>Dirección: Calle Principal #123, Ciudad Guatemala</p>
+      <p>Teléfono: <a href="tel:+50238148535" class="underline hover:text-yellow-300">+502 3814 8535</a></p>
+      <p>Correo: <a href="mailto:contacto@saboresdeldia.com" class="underline hover:text-yellow-300">contacto@saboresdeldia.com</a></p>
+    </div>
+    <div class="text-center md:text-right text-sm flex items-center gap-2">
+      <p>© 2025 Sistema Creado por GamsterPlace</p>
+      <a href="https://wa.me/41226223" target="_blank" rel="noopener" class="hover:text-green-400" aria-label="Contactar GamsterPlace por WhatsApp">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 fill-current" viewBox="0 0 24 24" >
+          <path d="M20.52 3.48A11.91 11.91 0 0012 0C5.373 0 0 5.373 0 12c0 2.115.553 4.084 1.52 5.8L0 24l6.372-1.508A11.91 11.91 0 0012 24c6.627 0 12-5.373 12-12 0-3.187-1.246-6.179-3.48-8.52zm-8.48 17.17c-2.422 0-4.671-.793-6.43-2.143l-.462-.325-3.78.895.88-3.68-.304-.47a8.638 8.638 0 01-1.32-4.766c0-4.774 3.887-8.66 8.66-8.66 2.313 0 4.48.903 6.106 2.54a8.588 8.588 0 012.54 6.12c0 4.773-3.886 8.66-8.664 8.66zm4.72-6.5c-.258-.13-1.524-.754-1.76-.84-.235-.086-.406-.13-.577.13-.17.26-.658.84-.81 1.01-.15.17-.3.195-.558.065-.258-.13-1.09-.403-2.07-1.28-.765-.68-1.28-1.52-1.43-1.78-.15-.26-.016-.4.115-.53.12-.12.258-.31.387-.465.13-.155.17-.26.26-.43.086-.17.043-.317-.022-.445-.065-.13-.577-1.39-.79-1.9-.207-.5-.42-.43-.58-.44-.15-.01-.32-.01-.49-.01a1.2 1.2 0 00-.88.41c-.3.3-1.15 1.12-1.15 2.73 0 1.6 1.18 3.15 1.34 3.37.16.23 2.31 3.53 5.6 4.95.78.34 1.39.54 1.87.69.79.25 1.51.22 2.08.13.63-.1 1.92-.78 2.2-1.54.28-.76.28-1.41.2-1.55-.08-.13-.3-.21-.56-.34z"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+</footer>
+
+</html>
